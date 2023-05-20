@@ -1,0 +1,11 @@
+.animate-link {
+  opacity: 1;
+  transition: opacity .5s linear;
+  -moz-transition: opacity .5s linear;
+  -webkit-transition: opacity .5s linear;
+  -o-transition: opacity .5s linear;
+}
+
+.animate-link:hover {
+  opacity: .8;
+}

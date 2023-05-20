@@ -1,0 +1,25 @@
+.popup__container-registry {
+    position: relative;
+    max-width: 430px;
+    max-height: 330px;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 34px 36px 36px 36px;
+    margin: 195px auto 0;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 570px) {
+    .popup__container-registry {
+        padding: 25px 22px;
+        margin-top: 123px;
+        max-width: 282px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .popup__container-registry {
+        margin-right: 19px;
+        margin-left: 19px;
+    }
+}

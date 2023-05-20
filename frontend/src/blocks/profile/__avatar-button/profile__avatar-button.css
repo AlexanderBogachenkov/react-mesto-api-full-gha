@@ -1,0 +1,10 @@
+.profile__avatar-button {
+    background-image: url(../../../images/pen.svg);
+    background-color: black;
+    border-radius: 50%;
+    cursor: pointer;
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+}

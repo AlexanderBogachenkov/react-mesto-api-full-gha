@@ -1,0 +1,32 @@
+.grid__image {
+    display: block;
+    width: 282px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #000000;
+    /* padding-bottom: 4px; */
+
+    object-fit: cover;
+    aspect-ratio: 1/1;
+
+    cursor: pointer;
+
+
+}
+
+@media screen and (max-width: 940px) {
+    .grid__image {
+        max-width: 550px;
+        max-height: 100%;
+        width: 100%;
+
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .grid__image {
+        max-width: 619px;
+        min-width: 282px;
+
+    }
+}

@@ -1,0 +1,6 @@
+.popup__container_type_tip {
+    display: flex;
+    flex-direction: column;
+    height: 330px;
+    padding: 60px 36px;
+}

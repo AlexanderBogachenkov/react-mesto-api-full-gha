@@ -1,0 +1,11 @@
+.grids {
+    display: flex;
+    justify-content: center;
+    width: calc(100% - 38px);
+    margin: 0;
+    padding: 0;
+}
+
+
+
+

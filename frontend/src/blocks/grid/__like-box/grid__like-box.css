@@ -1,0 +1,4 @@
+.grid__like-box {
+    display: flex;
+    flex-direction: column;
+}
