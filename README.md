@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 62.84.119.178
+IP 62.84.119.178
 
 Frontend https://alexboga.projectfront.nomoredomains.monster
 
