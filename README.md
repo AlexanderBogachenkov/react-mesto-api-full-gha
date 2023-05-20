@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 62.84.119.178
 
-Frontend https://...
+Frontend https://alexboga.projectfront.nomoredomains.monster
 
-Backend https://...
+Backend https://alexboga.projectback.nomoredomains.monster
