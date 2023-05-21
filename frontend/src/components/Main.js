@@ -1,4 +1,5 @@
 import React from "react";
+import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Card from "./Card";
 
@@ -11,7 +12,11 @@ function Main({
   onCardLike,
   cards,
 }) {
-  const currentUser = React.useContext(CurrentUserContext);
+  const currentUser = useContext(CurrentUserContext);
+  
+//   const jSon = JSON.stringify(currentUser);
+//   console.log('jSon -> ' + jSon);
+// // console.log('currentUser -> ' + obj.avatar);
 
   return (
     <main className="page__content">
@@ -23,19 +28,19 @@ function Main({
         >
           <img
             className="profile__picture"
-            src={currentUser.avatar}
+            src={currentUser?.data?.avatar || currentUser.avatar}
             alt="Жак-Ив Кусто"
           />
         </button>
 
         <div className="profile__grid">
-          <h1 className="profile__name">{currentUser.name}</h1>
+          <h1 className="profile__name">{currentUser?.data?.name || currentUser.name}</h1>
           <button
             type="button"
             className="profile__edit-button animate-link animate-link_deeper"
             onClick={onEditProfile}
           ></button>
-          <p className="profile__description">{currentUser.about}</p>
+          <p className="profile__description">{currentUser?.data?.about || currentUser.about}</p>
         </div>
 
         <button

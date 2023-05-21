@@ -9,17 +9,17 @@ function Header({ email, handleLogout }) {
 
       <Routes>
         <Route
-          path="/sign-in"
+          path="/signin"
           element={
-            <Link to="/sign-up" className="header__link">
+            <Link to="/signup" className="header__link">
               Регистрация
             </Link>
           }
         />
         <Route
-          path="/sign-up"
+          path="/signup"
           element={
-            <Link to="/sign-in" className="header__link">
+            <Link to="/signin" className="header__link">
               Войти
             </Link>
           }
@@ -30,7 +30,7 @@ function Header({ email, handleLogout }) {
             <div className="header__menu">
               <p className="header__email">{email}</p>
               <Link
-                to="/sign-in"
+                to="/signin"
                 className="header__link header__link_faded"
                 onClick={handleLogout}
               >

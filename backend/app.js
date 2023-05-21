@@ -1,5 +1,6 @@
-require("dotenv").config();
-const cors = require("cors");
+// const cookieParser = require("cookie-parser");
+
+// const cors = require("cors");
 
 const express = require("express");
 // const router = require("express").Router();
@@ -8,6 +9,7 @@ const helmet = require("helmet");
 const { errors, celebrate, Joi } = require("celebrate");
 
 const mongoose = require("mongoose");
+const corsHandler = require("./middlewares/corsHandler");
 const { createUser, login } = require("./controllers/users");
 const NotFoundError = require("./utils/NotFoundError");
 const errorsHandler = require("./middlewares/errors");
@@ -27,16 +29,19 @@ mongoose.connect("mongodb://127.0.0.1:27017/mestodb", {
   useNewUrlParser: true,
 });
 
+app.use(corsHandler);
+
 app.use(helmet());
 app.disable("x-powered-by");
 
 // старая версия
 // app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json()); // должно заработать
+app.use(express.urlencoded({ extended: true }));
+// app.use(cookieParser());
 
 // app.use(router);
-app.use(cors());
+// app.use(cors());
 
 app.use(requestLogger); // подключаем логгер запросов
 

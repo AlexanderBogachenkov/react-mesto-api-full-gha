@@ -67,7 +67,7 @@ function Register({ loggedIn, handleRegister, isLoading }) {
         </form>
         <div className="register__signup">
           <p className="register__text">Уже зарегистрированы?</p>
-          <Link to="/sign-in" className="register__signin-link">
+          <Link to="/signin" className="register__signin-link">
             Войти
           </Link>
         </div>

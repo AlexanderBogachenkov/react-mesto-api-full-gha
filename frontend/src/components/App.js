@@ -38,21 +38,86 @@ function App() {
 
   const navigate = useNavigate();
 
-  //При каждом рендере
+//   React.useEffect(() => {
+//     tokenCheck();
+// }, []);
+
+// React.useEffect(() => {
+//     if (loggedIn) {
+//         api.getUserData()
+//             .then((res) => {
+//                 // console.log(res)
+//                 setCurrentUser(res);
+//             })
+//             .catch((err) => {
+//                 console.log(err);
+//             });
+//         api.getInitialCards()
+//             .then((res) => {
+//                     setCards(res);
+//                 }
+//             )
+//             .catch((err) => {
+//                 console.log(err);
+//             });
+//     }
+// }, [loggedIn]);
+
+  
+  const tokenCheck = React.useCallback(() => {
+    setIsLoading(true);
+    // если у пользователя есть токен в localStorage,
+    // эта функция проверит валидность токена
+    const token = localStorage.getItem("token");
+    // console.log('token ->' + token);
+    if (token) {
+      // проверим токен      
+      Auth.getContent(token)      
+        .then((data) => {          
+          // console.log('data ->' + data.email)
+          if (data.email) {
+            // авторизуем пользователя
+            console.log('tokenCheck 80 -> ' + loggedIn);
+            setLoggedIn(true);
+            console.log('tokenCheck 82 -> ' + loggedIn);
+            // console.log('userData.data.email -> ' + userData.data.email)
+            setEmail(data.email);
+            navigate("/", { replace: true });
+          }
+        })
+        .catch((err) => {
+          console.log("tokenCheckErr -> ", err); // выведем ошибку в консоль
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      setIsLoading(false);
+    }
+  }, [navigate]);
+
+
+
+  // При каждом рендере
   React.useEffect(() => {
-    if (loggedIn) {
+    // tokenCheck();
+    // console.log('loggedIn 104 -> ' + loggedIn);
+    loggedIn &&
       // Общий промис - получаем данные юзера и карточки сайта
       Promise.all([api.getUserData(), api.getInitialCards()])
         .then(([userServerData, cardsData]) => {
           //Если ок, в стейт идут userServerData и cardsData
           setCurrentUser(userServerData);
           setCards(cardsData);
+          // console.log('userServerData -> ' + JSON.stringify(userServerData));
+          // console.log('cardsData -> ' + JSON.stringify(cardsData));
+
         })
         .catch((err) => {
           console.log(err);
         });
-    }
-  }, [loggedIn]);
+    
+  }, [loggedIn, tokenCheck]);
 
   //Выбранная карточка
   const [selectedCard, setSelectedCard] = React.useState(null);
@@ -76,8 +141,16 @@ function App() {
   }
 
   function handleCardLike(card) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
+    // console.log(card._id);
+    // console.log('currentUser -> ' + currentUser);
+    // Снова проверяем, есть ли уже лайк на этой карточке    
+    // const isLiked = card.likes.some((i) => i._id ?  i._id : i === currentUser.data._id);
+    // const isLiked = card.likes.some((i) => i === currentUser._id);
+    // const isLiked = card.likes.some((i) => console.log(i._id, currentUser._id));
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    // console.log(card.likes);
+    // console.log(currentUser._id);
+    // console.log(isLiked);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     (!isLiked ? api.addLikeToCard(card._id) : api.deleteLikeFromCard(card._id))
@@ -89,6 +162,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
+    
   }
 
   function handleDeletePlaceClick(card) {
@@ -182,8 +256,9 @@ function App() {
     Auth.authorize(email, password)
       .then((res) => {
         if (res.token) {
-          localStorage.setItem("token", res.token);
           setLoggedIn(true);
+          localStorage.setItem("token", res.token);
+          // console.log('setLoggedIn -> 260' + setLoggedIn);
           setEmail(email);
           navigate("/");
         }
@@ -203,19 +278,20 @@ function App() {
 
   const handleRegister = (email, password) => {
     setIsLoading(true);
-    Auth.register(email, password)
+    return Auth.register(email, password)
       .then((res) => {
-        console.log(res);
-        if (res) {
-          setLoggedIn(true);
+        // console.log(res);
+        
+          // setLoggedIn(true);
           setIsInfoToolTipOpen(true);
           setNotification({
             text: "Вы успешно зарегистрировались!",
             pic: loginSuccessful,
           });
+          navigate("/signin", { replace: true });
+          // console.log('to sign in');
           setEmail(email);
-          navigate("/sign-in");
-        }
+      
       })
       .catch(() => {
         setIsInfoToolTipOpen(true);
@@ -226,46 +302,18 @@ function App() {
       })
       .finally(() => {
         //Добавим изменение в тексте кнопки
+        setTimeout(() => {
         setIsLoading(false);
+      }, 1500);
       });
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    navigate("/sign-in");
+    navigate("/signin");
   };
 
-  const tokenCheck = React.useCallback(() => {
-    // setIsLoading(true);
-    // если у пользователя есть токен в localStorage,
-    // эта функция проверит валидность токена
-    const token = localStorage.getItem("token");
-    if (token) {
-      // проверим токен
-      Auth.getContent(token)
-        .then((userData) => {
-          if (userData) {
-            // авторизуем пользователя
-            setLoggedIn(true);
-            setEmail(userData.data.email);
-            navigate("/", { replace: true });
-          }
-        })
-        .catch((err) => {
-          console.log("tokenCheckErr -> ", err); // выведем ошибку в консоль
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
-      setIsLoading(false);
-    }
-  }, [navigate]);
-
-  React.useEffect(() => {
-    tokenCheck();
-  }, [tokenCheck]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -293,7 +341,7 @@ function App() {
           {/* {console.log("isLoading ->", isLoading)} */}
 
           <Route
-            path="/sign-in"
+            path="/signin"
             element={
               <Login
                 loggedIn={loggedIn}
@@ -305,7 +353,7 @@ function App() {
           />
 
           <Route
-            path="/sign-up"
+            path="/signup"
             element={
               <Register
                 loggedIn={loggedIn}
@@ -318,7 +366,7 @@ function App() {
           <Route
             path="*"
             element={
-              loggedIn ? <Navigate to="/" /> : <Navigate to="./sign-up" />
+              loggedIn ? <Navigate to="/" /> : <Navigate to="./signup" />
             }
           />
         </Routes>

@@ -1,14 +1,18 @@
+require("dotenv").config();
+
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+
+const { NODE_ENV, JWT_SECRET } = process.env;
 
 const NotFoundError = require("../utils/NotFoundError");
 const BadRequestError = require("../utils/BadRequestError");
 const UnauthorizedError = require("../utils/UnauthorizedError");
 const ConflictingRequestError = require("../utils/ConflictingRequestError");
 
-const {
-  CREATED_CODE,
-} = require("../utils/constants");
+// const {
+//   CREATED_CODE,
+// } = require("../utils/constants");
 
 const User = require("../models/user");
 
@@ -18,10 +22,11 @@ const login = (req, res, next) => {
   return User.findUserByCredentials(email, password)
     .then((user) => {
       // создадим токен
-      const token = jwt.sign({ _id: user._id }, "some-secret-key", { expiresIn: "7d" });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === "production" ? JWT_SECRET : "some-secret-key", { expiresIn: "7d" });
 
       // вернём токен
       res.send({ token });
+      // res.send(token);
     })
     .catch(next);
 };
@@ -32,22 +37,22 @@ const getUsers = (req, res, next) => {
       if (!users) {
         next(new UnauthorizedError("Вы не авторизованы"));
       } else {
-        res.send({ data: users });
+        // res.send({ data: users });
+        res.send(users);
       }
     })
     .catch(next);
 };
 
 const getUserById = (req, res, next) => {
-  const { userId } = req.params;
-
-  User.findById(userId)
-    .orFail()
+  User.findById(req.params.userId)
+    // .orFail()
     .then((user) => {
       if (!user) {
         next(new NotFoundError("Пользователь по указанному _id не найден"));
       } else {
-        res.send({ data: user });
+        // res.send({ data: user });
+        res.send(user);
       }
     })
     .catch((error) => {
@@ -76,7 +81,8 @@ const createUser = (req, res, next) => {
       },
     }))
 
-    .then((user) => res.status(CREATED_CODE).send(user))
+  // .then((user) => res.status(CREATED_CODE).send({ data: user }))
+  // .then((user) => res.status(CREATED_CODE).send(user))
 
     .catch((error) => {
       if (error.name === "ValidationError") {
@@ -99,7 +105,7 @@ const updateProfile = (req, res, next) => {
       if (!user) {
         next(new NotFoundError("Пользователь с таким идентификатором не найден"));
       } else {
-        res.send({ user });
+        res.send(user);
       }
     })
     .catch((error) => {
@@ -118,7 +124,7 @@ const updateAvatar = (req, res, next) => {
       if (!user) {
         next(new NotFoundError("Пользователь с таким идентификатором не найден"));
       } else {
-        res.send({ user });
+        res.send(user);
       }
     })
     .catch((error) => {
@@ -136,7 +142,8 @@ const getMe = (req, res, next) => {
       if (!user) {
         next(new NotFoundError("Пользователь с таким идентификатором не найден"));
       } else {
-        res.send({ data: user });
+        // res.send({ data: user });
+        res.send(user);
       }
     })
     .catch(next);

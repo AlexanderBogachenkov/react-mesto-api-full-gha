@@ -5,10 +5,23 @@ function Card({ card, onCardClick, onCardDelete, onCardLike }) {
   const currentUser = React.useContext(CurrentUserContext);
 
   // Определяем, являемся ли мы владельцем текущей карточки
-  const isOwn = card.owner._id === currentUser._id;
+  // console.log('currentUser -> ' + currentUser);
+  // console.log('card.owner._id -> ' + card.owner._id);
+
+  const isOwn = currentUser?.data?._id 
+  ? card.owner._id === currentUser?.data._id 
+  : card.owner._id === currentUser?._id;
+
+  // const isOwn = card.owner._id === currentUser.data._id;
+  // console.log(card.owner._id);
+  // console.log(currentUser.data._id);
+  // console.log(currentUser.data.avatar);
 
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
-  const isLiked = card.likes.some((i) => i._id === currentUser._id);
+  const isLiked = card.likes.some((i) => 
+  currentUser?.data?._id 
+  ? i._id === currentUser.data._id 
+  : i._id === currentUser._id);
 
   // Создаём переменную, которую после зададим в `className` для кнопки лайка
   const cardLikeButtonClassName = `grid__heart ${
@@ -24,6 +37,7 @@ function Card({ card, onCardClick, onCardDelete, onCardLike }) {
   //по клику меняется isOpen
 
   function handleLikeClick() {
+    // console.log(card);
     onCardLike(card);
   }
 
