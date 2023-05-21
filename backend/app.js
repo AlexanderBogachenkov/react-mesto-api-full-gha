@@ -24,21 +24,26 @@ const { PORT = 3000 } = process.env;
 
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
-const allowedCors = [
-  "https://alexboga.projectfront.nomoredomains.monster",
-  "http://alexboga.projectfront.nomoredomains.monster",
-  "https://alexboga.projectback.nomoredomains.monster",
-  "http://alexboga.projectback.nomoredomains.monster",
-];
+// const allowedCors = [
+//   "https://alexboga.projectfront.nomoredomains.monster",
+//   "http://alexboga.projectfront.nomoredomains.monster",
+//   "https://alexboga.projectback.nomoredomains.monster",
+//   "http://alexboga.projectback.nomoredomains.monster",
+// ];
 
 const app = express();
 
+// const corsOptions = {
+//   origin: allowedCors,
+//   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+//   preflightContinue: false,
+//   // allowedHeaders: ["Content-Type", "Authorization"],
+//   optionsSuccessStatus: 204,
+// };
+
 const corsOptions = {
-  origin: allowedCors,
-  methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-  preflightContinue: false,
-  // allowedHeaders: ["Content-Type", "Authorization"],
-  optionsSuccessStatus: 204,
+  origin: true,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
