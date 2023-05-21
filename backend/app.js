@@ -1,15 +1,15 @@
 // const cookieParser = require("cookie-parser");
 
-// const cors = require("cors");
-
 const express = require("express");
+const cors = require("cors");
+
 // const router = require("express").Router();
 // const bodyParser = require("body-parser");
 const helmet = require("helmet");
 const { errors, celebrate, Joi } = require("celebrate");
 
 const mongoose = require("mongoose");
-const corsHandler = require("./middlewares/corsHandler");
+// const corsHandler = require("./middlewares/corsHandler");
 const { createUser, login } = require("./controllers/users");
 const NotFoundError = require("./utils/NotFoundError");
 const errorsHandler = require("./middlewares/errors");
@@ -24,12 +24,13 @@ const { PORT = 3000 } = process.env;
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const app = express();
+app.use(cors());
 
 mongoose.connect("mongodb://127.0.0.1:27017/mestodb", {
   useNewUrlParser: true,
 });
 
-app.use(corsHandler);
+// app.use(corsHandler);
 
 app.use(helmet());
 app.disable("x-powered-by");
@@ -41,7 +42,6 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser());
 
 // app.use(router);
-// app.use(cors());
 
 app.use(requestLogger); // подключаем логгер запросов
 
