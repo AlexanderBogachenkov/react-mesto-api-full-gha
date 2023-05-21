@@ -27,11 +27,12 @@ const app = express();
 
 const corsOptions = {
   origin: "*",
-  method: "GET, HEAD, PUT, PATCH, POST, DELETE",
-  allowedHeaders: ["Content-Type", "Authorization"],
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
-  optionSuccessStatus: 204,
+  allowedHeaders: ["Content-Type", "Authorization"],
+  optionsSuccessStatus: 204,
 };
+
 app.use(cors(corsOptions));
 
 mongoose.connect("mongodb://127.0.0.1:27017/mestodb", {
