@@ -24,7 +24,15 @@ const { PORT = 3000 } = process.env;
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const app = express();
-app.use(cors());
+
+const corsOptions = {
+  origin: "*",
+  method: "GET, HEAD, PUT, PATCH, POST, DELETE",
+  allowHeaders: ["Content-Type", "Authorization"],
+  preflightContinue: false,
+  optionSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
 
 mongoose.connect("mongodb://127.0.0.1:27017/mestodb", {
   useNewUrlParser: true,
