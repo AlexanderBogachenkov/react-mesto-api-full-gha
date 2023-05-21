@@ -2,6 +2,8 @@
 const allowedCors = [
   "https://alexboga.projectfront.nomoredomains.monster",
   "http://alexboga.projectfront.nomoredomains.monster",
+  "https://alexboga.projectback.nomoredomains.monster",
+  "http://alexboga.projectback.nomoredomains.monster",
   "https://127.0.0.1:3000",
   "http://127.0.0.1:3000",
   "https://127.0.0.1:3001",
