@@ -21,13 +21,29 @@ const cardRoute = require("./routes/cards");
 const { regEx } = require("./utils/constants");
 
 const { PORT = 3000 } = process.env;
+
 const { requestLogger, errorLogger } = require("./middlewares/logger");
+
+const allowedCors = [
+  "https://alexboga.projectfront.nomoredomains.monster",
+  "http://alexboga.projectfront.nomoredomains.monster",
+  "https://alexboga.projectback.nomoredomains.monster",
+  "http://alexboga.projectback.nomoredomains.monster",
+  // "https://127.0.0.1:3000",
+  // "http://127.0.0.1:3000",
+  // "https://127.0.0.1:3001",
+  // "http://127.0.0.1:3001",
+  // "http://localhost:3001",
+  // "https://localhost:3001",
+  // "http://localhost:3000",
+  // "https://localhost:3000",
+];
 
 const app = express();
 
 const corsOptions = {
-  origin: "*",
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  origin: allowedCors,
+  methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
   preflightContinue: false,
   allowedHeaders: ["Content-Type", "Authorization"],
   optionsSuccessStatus: 204,
