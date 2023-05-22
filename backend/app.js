@@ -22,33 +22,33 @@ const { PORT = 3000 } = process.env;
 
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
-const allowedCors = [
-  "https://alexboga.projectfront.nomoredomains.monster",
-  "http://alexboga.projectfront.nomoredomains.monster",
-  "https://alexboga.projectback.nomoredomains.monster",
-  "http://alexboga.projectback.nomoredomains.monster",
-  "https://127.0.0.1:3000",
-  "http://127.0.0.1:3000",
-  "https://127.0.0.1:3001",
-  "http://127.0.0.1:3001",
-  "http://localhost:3001",
-  "https://localhost:3001",
-  "http://localhost:3000",
-  "https://localhost:3000",
-];
+// const allowedCors = [
+//   "https://alexboga.projectfront.nomoredomains.monster",
+//   "http://alexboga.projectfront.nomoredomains.monster",
+//   "https://alexboga.projectback.nomoredomains.monster",
+//   "http://alexboga.projectback.nomoredomains.monster",
+//   "https://127.0.0.1:3000",
+//   "http://127.0.0.1:3000",
+//   "https://127.0.0.1:3001",
+//   "http://127.0.0.1:3001",
+//   "http://localhost:3001",
+//   "https://localhost:3001",
+//   "http://localhost:3000",
+//   "https://localhost:3000",
+// ];
 
 const app = express();
 
-const corsOptions = {
-  origin: allowedCors,
-  methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-  preflightContinue: false,
-  allowedHeaders: ["Content-Type", "Authorization"],
-  optionsSuccessStatus: 204,
-  credentials: true,
-};
+// const corsOptions = {
+//   origin: allowedCors,
+//   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+//   preflightContinue: false,
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   optionsSuccessStatus: 204,
+//   credentials: true,
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
 mongoose.connect("mongodb://127.0.0.1:27017/mestodb", {
   useNewUrlParser: true,
@@ -76,14 +76,14 @@ app.get("/crash-test", () => {
   }, 0);
 });
 
-app.post("/signin", cors(corsOptions), celebrate({
+app.post("/signin", cors(), celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
 }), login);
 
-app.post("/signup", cors(corsOptions), celebrate({
+app.post("/signup", cors(), celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
@@ -95,8 +95,8 @@ app.post("/signup", cors(corsOptions), celebrate({
 }), createUser);
 
 // роуты, которым авторизация нужна
-app.use("/users", cors(corsOptions), auth, userRoute);
-app.use("/cards", cors(corsOptions), auth, cardRoute);
+app.use("/users", cors(), auth, userRoute);
+app.use("/cards", cors(), auth, cardRoute);
 
 app.use(errorLogger); // подключаем логгер ошибок
 
@@ -104,7 +104,7 @@ app.use(errorLogger); // подключаем логгер ошибок
 //   throw new NotFoundError("Страница по этому адресу не найдена");
 // });
 
-app.use("*", cors(corsOptions), auth, (req, res, next) => {
+app.use("*", cors(), auth, (req, res, next) => {
   next(new NotFoundError("Страница по этому адресу не найдена"));
 });
 
