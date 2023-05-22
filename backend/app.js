@@ -61,6 +61,7 @@ app.disable("x-powered-by");
 
 // старая версия
 // app.use(bodyParser.json());
+
 app.use(express.json()); // должно заработать
 app.use(express.urlencoded({ extended: true }));
 // app.use(cookieParser());
