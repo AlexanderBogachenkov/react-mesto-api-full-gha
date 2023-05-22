@@ -14,7 +14,6 @@ const NotFoundError = require("./utils/NotFoundError");
 const errorsHandler = require("./middlewares/errors");
 const auth = require("./middlewares/auth");
 
-// const router = require("./routes/index");
 const userRoute = require("./routes/users");
 const cardRoute = require("./routes/cards");
 const { regEx } = require("./utils/constants");
@@ -49,12 +48,6 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
-
-
-// const corsOptions = {
-//   origin: true,
-//   credentials: true,
-// };
 
 mongoose.connect("mongodb://127.0.0.1:27017/mestodb", {
   useNewUrlParser: true,
@@ -119,5 +112,5 @@ app.use(errorsHandler);
 
 app.listen(PORT, () => {
   // Если всё работает, консоль покажет, какой порт приложение слушает
-  console.log(`App listening on port ${PORT}`);
+  // console.log(`App listening on port ${PORT}`);
 });

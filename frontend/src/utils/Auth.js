@@ -13,8 +13,8 @@ export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      Accept: "application/json",
+      // "Access-Control-Allow-Origin": "*",
+      // Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
@@ -29,8 +29,8 @@ export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      Accept: "application/json",
+      // "Access-Control-Allow-Origin": "*",
+      // Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ email, password }),
@@ -42,8 +42,8 @@ export const getContent = (token) => {
     method: "GET",
     credentials: "include",
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      Accept: "application/json",
+      // "Access-Control-Allow-Origin": "*",
+      // Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
 
