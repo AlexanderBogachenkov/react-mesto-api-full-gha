@@ -52,22 +52,34 @@ const app = express();
 // const whitelist = ['http://localhost:3000', 'http://example2.com'];
 
 // ✅ Enable pre-flight requests
-app.options("*", cors());
+// app.options("*", cors());
 
-const corsOptions = {
-  credentials: true,
-  origin: (origin, callback) => {
-    if (allowedCors.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-};
+// const corsOptions = {
+//   credentials: true,
+//   origin: (origin, callback) => {
+//     if (allowedCors.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 
-app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  //  specify CORS headers to send
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Methods",
+    "POST, PUT, PATCH, GET, DELETE, OPTIONS",
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Api-Key, X-Requested-With, Content-Type, Accept, Authorization",
+  );
+  next();
+});
 
 mongoose.connect("mongodb://127.0.0.1:27017/mestodb", {
   useNewUrlParser: true,
