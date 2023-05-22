@@ -34,7 +34,7 @@ class Api {
   changeUserData({ name, about }) {
     return fetch(`${this._baseUrl}${"/users/me"}`, {
       method: "PATCH",
-      // credentials: this._credentials,
+      credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
         name,
@@ -46,7 +46,7 @@ class Api {
   addCard(data) {
     return fetch(`${this._baseUrl}${"/cards"}`, {
       method: "POST",
-      // credentials: this._credentials,
+      credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
@@ -58,7 +58,7 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}${"/cards/"}${cardId}`, {
       method: "DELETE",
-      // credentials: this._credentials,
+      credentials: "include",
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -67,7 +67,7 @@ class Api {
     // console.log('cardId -> ', cardId);
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
-      // credentials: this._credentials,
+      credentials: "include",
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -75,7 +75,7 @@ class Api {
   deleteLikeFromCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
-      // credentials: this._credentials,
+      credentials: "include",
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -83,7 +83,7 @@ class Api {
   changeAvatar({ avatar }) {
     return fetch(`${this._baseUrl}${"/users/me/avatar"}`, {
       method: "PATCH",
-      // credentials: this._credentials,
+      credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
         avatar: avatar,
@@ -101,5 +101,5 @@ export const api = new Api({
     "Content-Type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("token")}`
   },
-  // credentials: 'include',
+  credentials: "include",
 });

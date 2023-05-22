@@ -44,8 +44,9 @@ const corsOptions = {
   origin: allowedCors,
   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
   preflightContinue: false,
-  // allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   optionsSuccessStatus: 204,
+  credentials: true,
 };
 
 // const corsOptions = {
