@@ -77,9 +77,9 @@ function App() {
           // console.log('data ->' + data.email)
           if (data.email) {
             // авторизуем пользователя
-            console.log('tokenCheck 80 -> ' + loggedIn);
+            // console.log('tokenCheck 80 -> ' + loggedIn);
             setLoggedIn(true);
-            console.log('tokenCheck 82 -> ' + loggedIn);
+            // console.log('tokenCheck 82 -> ' + loggedIn);
             // console.log('userData.data.email -> ' + userData.data.email)
             setEmail(data.email);
             navigate("/", { replace: true });
