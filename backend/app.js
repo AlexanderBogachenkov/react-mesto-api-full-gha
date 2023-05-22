@@ -39,14 +39,34 @@ const allowedCors = [
 
 const app = express();
 
+// const corsOptions = {
+//   origin: allowedCors,
+//   methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
+//   preflightContinue: false,
+//   allowedHeaders: ["Content-Type", "Authorization"],
+//   optionsSuccessStatus: 204,
+//   credentials: true,
+// };
+
+// 👇️ specify origins to allow
+// const whitelist = ['http://localhost:3000', 'http://example2.com'];
+
+// ✅ Enable pre-flight requests
+app.options("*", cors());
+
 const corsOptions = {
-  origin: allowedCors,
-  methods: "GET, HEAD, PUT, PATCH, POST, DELETE",
-  preflightContinue: false,
-  allowedHeaders: ["Content-Type", "Authorization"],
-  optionsSuccessStatus: 204,
   credentials: true,
+  origin: (origin, callback) => {
+    if (allowedCors.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
 };
+
+app.use(cors(corsOptions));
+
 app.use(cors(corsOptions));
 
 mongoose.connect("mongodb://127.0.0.1:27017/mestodb", {
