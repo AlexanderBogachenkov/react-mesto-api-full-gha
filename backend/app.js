@@ -48,13 +48,13 @@ const corsOptions = {
   optionsSuccessStatus: 204,
   credentials: true,
 };
+app.use(cors(corsOptions));
+
 
 // const corsOptions = {
 //   origin: true,
 //   credentials: true,
 // };
-
-app.use(cors(corsOptions));
 
 mongoose.connect("mongodb://127.0.0.1:27017/mestodb", {
   useNewUrlParser: true,
