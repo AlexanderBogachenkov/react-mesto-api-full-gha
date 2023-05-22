@@ -94,8 +94,8 @@ class Api {
 
 export const api = new Api({
   // baseUrl: "https://mesto.nomoreparties.co/v1/cohort-59/",
-  // baseUrl: "https://alexboga.projectback.nomoredomains.monster",
-  baseUrl: "http://127.0.0.1:3000", // тестируем локально
+  baseUrl: "https://alexboga.projectback.nomoredomains.monster",
+  // baseUrl: "http://127.0.0.1:3000", // тестируем локально
   headers: {
     //old authorization: "8b85f1f7-8fcc-4b0e-a737-149d0d1061a5",
     // "Access-Control-Allow-Origin": "*",
