@@ -16,7 +16,7 @@ class Api {
   getInitialCards() {
     return fetch(`${this._baseUrl}${"/cards"}`, {
       method: "GET",
-      credentials: "include",
+      // credentials: "include",
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -26,7 +26,7 @@ class Api {
   getUserData() {
     return fetch(`${this._baseUrl}${"/users/me"}`, {
       method: "GET",
-      credentials: "include",
+      // credentials: "include",
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -34,7 +34,7 @@ class Api {
   changeUserData({ name, about }) {
     return fetch(`${this._baseUrl}${"/users/me"}`, {
       method: "PATCH",
-      credentials: "include",
+      // credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
         name,
@@ -46,7 +46,7 @@ class Api {
   addCard(data) {
     return fetch(`${this._baseUrl}${"/cards"}`, {
       method: "POST",
-      credentials: "include",
+      // credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
         name: data.name,
@@ -58,7 +58,7 @@ class Api {
   deleteCard(cardId) {
     return fetch(`${this._baseUrl}${"/cards/"}${cardId}`, {
       method: "DELETE",
-      credentials: "include",
+      // credentials: "include",
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -67,7 +67,7 @@ class Api {
     // console.log('cardId -> ', cardId);
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "PUT",
-      credentials: "include",
+      // credentials: "include",
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -75,7 +75,7 @@ class Api {
   deleteLikeFromCard(cardId) {
     return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: "DELETE",
-      credentials: "include",
+      // credentials: "include",
       headers: this._headers,
     }).then(this._checkResponse);
   }
@@ -83,7 +83,7 @@ class Api {
   changeAvatar({ avatar }) {
     return fetch(`${this._baseUrl}${"/users/me/avatar"}`, {
       method: "PATCH",
-      credentials: "include",
+      // credentials: "include",
       headers: this._headers,
       body: JSON.stringify({
         avatar: avatar,
@@ -94,13 +94,13 @@ class Api {
 
 export const api = new Api({
   // baseUrl: "https://mesto.nomoreparties.co/v1/cohort-59/",
-  baseUrl: "https://alexboga.projectback.nomoredomains.monster",
-  // baseUrl: "http://127.0.0.1:3000", // тестируем локально
+  // baseUrl: "https://alexboga.projectback.nomoredomains.monster",
+  baseUrl: "http://127.0.0.1:3000", // тестируем локально
   headers: {
     //old authorization: "8b85f1f7-8fcc-4b0e-a737-149d0d1061a5",
     // "Access-Control-Allow-Origin": "*",
     "Content-Type": "application/json",
     Authorization: `Bearer ${localStorage.getItem("token")}`
   },
-  credentials: "include",
+  // credentials: "include",
 });

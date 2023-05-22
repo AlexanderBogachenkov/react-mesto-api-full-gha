@@ -75,14 +75,14 @@ app.get("/crash-test", () => {
   }, 0);
 });
 
-app.post("/signin", celebrate({
+app.post("/signin", cors(corsOptions), celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
   }),
 }), login);
 
-app.post("/signup", celebrate({
+app.post("/signup", cors(corsOptions), celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
@@ -94,8 +94,8 @@ app.post("/signup", celebrate({
 }), createUser);
 
 // роуты, которым авторизация нужна
-app.use("/users", auth, userRoute);
-app.use("/cards", auth, cardRoute);
+app.use("/users", cors(corsOptions), auth, userRoute);
+app.use("/cards", cors(corsOptions), auth, cardRoute);
 
 app.use(errorLogger); // подключаем логгер ошибок
 
@@ -103,7 +103,7 @@ app.use(errorLogger); // подключаем логгер ошибок
 //   throw new NotFoundError("Страница по этому адресу не найдена");
 // });
 
-app.use("*", auth, (req, res, next) => {
+app.use("*", cors(corsOptions), auth, (req, res, next) => {
   next(new NotFoundError("Страница по этому адресу не найдена"));
 });
 

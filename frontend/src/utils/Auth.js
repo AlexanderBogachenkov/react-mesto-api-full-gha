@@ -1,5 +1,5 @@
-const BASE_URL = "https://alexboga.projectback.nomoredomains.monster";
-// const BASE_URL = "http://127.0.0.1:3000"; // тестируем локально
+// const BASE_URL = "https://alexboga.projectback.nomoredomains.monster";
+const BASE_URL = "http://127.0.0.1:3000"; // тестируем локально
 
 const _checkResponse = (res) => {
   
@@ -40,7 +40,7 @@ export const authorize = (email, password) => {
 export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
-    credentials: "include",
+    // credentials: "include",
     headers: {
       // "Access-Control-Allow-Origin": "*",
       // Accept: "application/json",
