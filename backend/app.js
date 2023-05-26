@@ -16,7 +16,7 @@ const auth = require("./middlewares/auth");
 
 const userRoute = require("./routes/users");
 const cardRoute = require("./routes/cards");
-const { regEx } = require("./utils/constants");
+const { REGEX_URL } = require("./utils/constants");
 
 const { PORT = 3000 } = process.env;
 
@@ -90,7 +90,7 @@ app.post("/signup", cors(), celebrate({
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
     // avatar: Joi.string().regex(/^https?:\/\/(www.)?([\da-z-]+\.)+\/?\S*/im),
-    avatar: Joi.string().regex(regEx),
+    avatar: Joi.string().regex(REGEX_URL),
     about: Joi.string().min(2).max(30),
   }),
 }), createUser);
@@ -98,8 +98,6 @@ app.post("/signup", cors(), celebrate({
 // роуты, которым авторизация нужна
 app.use("/users", cors(), auth, userRoute);
 app.use("/cards", cors(), auth, cardRoute);
-
-app.use(errorLogger); // подключаем логгер ошибок
 
 // app.use("/*", () => {
 //   throw new NotFoundError("Страница по этому адресу не найдена");
@@ -109,6 +107,7 @@ app.use("*", cors(), auth, (req, res, next) => {
   next(new NotFoundError("Страница по этому адресу не найдена"));
 });
 
+app.use(errorLogger); // подключаем логгер ошибок
 app.use(errors());
 app.use(errorsHandler);
 

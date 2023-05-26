@@ -34,12 +34,7 @@ const login = (req, res, next) => {
 const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => {
-      if (!users) {
-        next(new UnauthorizedError("Вы не авторизованы"));
-      } else {
-        // res.send({ data: users });
-        res.send(users);
-      }
+      res.send(users);
     })
     .catch(next);
 };
@@ -128,7 +123,7 @@ const updateAvatar = (req, res, next) => {
       }
     })
     .catch((error) => {
-      if (error.name === "ValidationError" || error.name === "CastError") {
+      if (error.name === "ValidationError") {
         next(new BadRequestError("Переданы некорректные данные при редактировании профиля аватара"));
       } else {
         next(error);

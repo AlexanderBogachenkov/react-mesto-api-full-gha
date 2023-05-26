@@ -64,37 +64,37 @@ function App() {
 // }, [loggedIn]);
 
   
-  const tokenCheck = React.useCallback(() => {
-    setIsLoading(true);
-    // если у пользователя есть токен в localStorage,
-    // эта функция проверит валидность токена
-    const token = localStorage.getItem("token");
-    // console.log('token ->' + token);
-    if (token) {
-      // проверим токен      
-      Auth.getContent(token)      
-        .then((data) => {          
-          // console.log('data ->' + data.email)
-          if (data.email) {
-            // авторизуем пользователя
-            // console.log('tokenCheck 80 -> ' + loggedIn);
-            setLoggedIn(true);
-            // console.log('tokenCheck 82 -> ' + loggedIn);
-            // console.log('userData.data.email -> ' + userData.data.email)
-            setEmail(data.email);
-            navigate("/", { replace: true });
-          }
-        })
-        .catch((err) => {
-          console.log("tokenCheckErr -> ", err); // выведем ошибку в консоль
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else {
-      setIsLoading(false);
-    }
-  }, [navigate]);
+  // const tokenCheck = React.useCallback(() => {
+  //   setIsLoading(true);
+  //   // если у пользователя есть токен в localStorage,
+  //   // эта функция проверит валидность токена
+  //   const token = localStorage.getItem("token");
+  //   // console.log('token ->' + token);
+  //   if (token) {
+  //     // проверим токен      
+  //     Auth.getContent(token)      
+  //       .then((data) => {          
+  //         // console.log('data ->' + data)
+  //         if (data.email) {
+  //           // авторизуем пользователя
+  //           // console.log('tokenCheck 80 -> ' + loggedIn);
+  //           setLoggedIn(true);
+  //           // console.log('tokenCheck 82 -> ' + loggedIn);
+  //           // console.log('userData.data.email -> ' + data.email)
+  //           setEmail(data.email);
+  //           navigate("/", { replace: true });
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         console.log("tokenCheckErr -> ", err); // выведем ошибку в консоль
+  //       })
+  //       .finally(() => {
+  //         setIsLoading(false);
+  //       });
+  //   } else {
+  //     setIsLoading(false);
+  //   }
+  // }, [navigate]);
 
 
 
@@ -117,7 +117,7 @@ function App() {
           console.log(err);
         });
     
-  }, [loggedIn, tokenCheck]);
+  }, [loggedIn]);
 
   //Выбранная карточка
   const [selectedCard, setSelectedCard] = React.useState(null);
@@ -256,6 +256,7 @@ function App() {
     Auth.authorize(email, password)
       .then((res) => {
         if (res.token) {
+          // console.log(res);
           setLoggedIn(true);
           localStorage.setItem("token", res.token);
           // console.log('setLoggedIn -> 260' + setLoggedIn);
@@ -346,7 +347,7 @@ function App() {
               <Login
                 loggedIn={loggedIn}
                 handleLogin={handleLogin}
-                tokenCheck={tokenCheck}
+                // tokenCheck={tokenCheck}
                 isLoading={isLoading}
               />
             }

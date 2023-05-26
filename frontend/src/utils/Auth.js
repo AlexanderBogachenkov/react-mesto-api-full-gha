@@ -1,5 +1,5 @@
-const BASE_URL = "https://alexboga.projectback.nomoredomains.monster";
-// const BASE_URL = "http://127.0.0.1:3000"; // тестируем локально
+// const BASE_URL = "https://alexboga.projectback.nomoredomains.monster";
+const BASE_URL = "http://127.0.0.1:3000"; // тестируем локально
 
 const _checkResponse = (res) => {
   

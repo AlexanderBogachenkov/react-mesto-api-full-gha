@@ -24,7 +24,8 @@ module.exports = (req, res, next) => {
     payload = jwt.verify(token, NODE_ENV === "production" ? JWT_SECRET : "some-secret-key");
   } catch (err) {
     // throw new UnauthorizedError("Переданы неверные данные");
-    next(new UnauthorizedError("Переданы неверные данные"));
+    // eslint-disable-next-line consistent-return
+    return next(new UnauthorizedError("Переданы неверные данные"));
   }
 
   req.user = payload; // записываем пейлоуд в объект запроса
