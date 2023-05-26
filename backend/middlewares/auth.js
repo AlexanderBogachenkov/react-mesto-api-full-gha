@@ -1,10 +1,6 @@
 require("dotenv").config();
 
-// console.log(process.env);
-
 const { NODE_ENV, JWT_SECRET } = process.env;
-
-// console.log(NODE_ENV, JWT_SECRET);
 
 /* eslint-disable linebreak-style */
 const jwt = require("jsonwebtoken");
@@ -23,7 +19,6 @@ module.exports = (req, res, next) => {
   try {
     payload = jwt.verify(token, NODE_ENV === "production" ? JWT_SECRET : "some-secret-key");
   } catch (err) {
-    // throw new UnauthorizedError("Переданы неверные данные");
     // eslint-disable-next-line consistent-return
     return next(new UnauthorizedError("Переданы неверные данные"));
   }

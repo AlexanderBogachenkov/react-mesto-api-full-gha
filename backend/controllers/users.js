@@ -7,12 +7,8 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
 const NotFoundError = require("../utils/NotFoundError");
 const BadRequestError = require("../utils/BadRequestError");
-const UnauthorizedError = require("../utils/UnauthorizedError");
-const ConflictingRequestError = require("../utils/ConflictingRequestError");
 
-// const {
-//   CREATED_CODE,
-// } = require("../utils/constants");
+const ConflictingRequestError = require("../utils/ConflictingRequestError");
 
 const User = require("../models/user");
 
@@ -26,7 +22,6 @@ const login = (req, res, next) => {
 
       // вернём токен
       res.send({ token });
-      // res.send(token);
     })
     .catch(next);
 };
@@ -41,12 +36,10 @@ const getUsers = (req, res, next) => {
 
 const getUserById = (req, res, next) => {
   User.findById(req.params.userId)
-    // .orFail()
     .then((user) => {
       if (!user) {
         next(new NotFoundError("Пользователь по указанному _id не найден"));
       } else {
-        // res.send({ data: user });
         res.send(user);
       }
     })
@@ -75,10 +68,6 @@ const createUser = (req, res, next) => {
         _id: user._id,
       },
     }))
-
-  // .then((user) => res.status(CREATED_CODE).send({ data: user }))
-  // .then((user) => res.status(CREATED_CODE).send(user))
-
     .catch((error) => {
       if (error.name === "ValidationError") {
         next(new BadRequestError("Переданы некорректные данные при создании пользователя"));

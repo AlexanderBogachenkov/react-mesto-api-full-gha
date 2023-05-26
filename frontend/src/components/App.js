@@ -12,7 +12,7 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import EditProfilePopup from "./EditProfilePopup";
 import AddPlacePopup from "./AddPlacePopup";
 import DeletePopup from "./DeletePopup";
-// import FormValidationTest from "../FormValidationTest";
+
 import Login from "./Login";
 import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
@@ -37,71 +37,8 @@ function App() {
   const [isInfoToolTipOpen, setIsInfoToolTipOpen] = React.useState(false);
 
   const navigate = useNavigate();
-
-//   React.useEffect(() => {
-//     tokenCheck();
-// }, []);
-
-// React.useEffect(() => {
-//     if (loggedIn) {
-//         api.getUserData()
-//             .then((res) => {
-//                 // console.log(res)
-//                 setCurrentUser(res);
-//             })
-//             .catch((err) => {
-//                 console.log(err);
-//             });
-//         api.getInitialCards()
-//             .then((res) => {
-//                     setCards(res);
-//                 }
-//             )
-//             .catch((err) => {
-//                 console.log(err);
-//             });
-//     }
-// }, [loggedIn]);
-
-  
-  // const tokenCheck = React.useCallback(() => {
-  //   setIsLoading(true);
-  //   // если у пользователя есть токен в localStorage,
-  //   // эта функция проверит валидность токена
-  //   const token = localStorage.getItem("token");
-  //   // console.log('token ->' + token);
-  //   if (token) {
-  //     // проверим токен      
-  //     Auth.getContent(token)      
-  //       .then((data) => {          
-  //         // console.log('data ->' + data)
-  //         if (data.email) {
-  //           // авторизуем пользователя
-  //           // console.log('tokenCheck 80 -> ' + loggedIn);
-  //           setLoggedIn(true);
-  //           // console.log('tokenCheck 82 -> ' + loggedIn);
-  //           // console.log('userData.data.email -> ' + data.email)
-  //           setEmail(data.email);
-  //           navigate("/", { replace: true });
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log("tokenCheckErr -> ", err); // выведем ошибку в консоль
-  //       })
-  //       .finally(() => {
-  //         setIsLoading(false);
-  //       });
-  //   } else {
-  //     setIsLoading(false);
-  //   }
-  // }, [navigate]);
-
-
-
   // При каждом рендере
   React.useEffect(() => {
-    // tokenCheck();
-    // console.log('loggedIn 104 -> ' + loggedIn);
     loggedIn &&
       // Общий промис - получаем данные юзера и карточки сайта
       Promise.all([api.getUserData(), api.getInitialCards()])
@@ -109,8 +46,7 @@ function App() {
           //Если ок, в стейт идут userServerData и cardsData
           setCurrentUser(userServerData);
           setCards(cardsData);
-          // console.log('userServerData -> ' + JSON.stringify(userServerData));
-          // console.log('cardsData -> ' + JSON.stringify(cardsData));
+ 
 
         })
         .catch((err) => {
@@ -141,16 +77,8 @@ function App() {
   }
 
   function handleCardLike(card) {
-    // console.log(card._id);
-    // console.log('currentUser -> ' + currentUser);
-    // Снова проверяем, есть ли уже лайк на этой карточке    
-    // const isLiked = card.likes.some((i) => i._id ?  i._id : i === currentUser.data._id);
-    // const isLiked = card.likes.some((i) => i === currentUser._id);
-    // const isLiked = card.likes.some((i) => console.log(i._id, currentUser._id));
+   
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    // console.log(card.likes);
-    // console.log(currentUser._id);
-    // console.log(isLiked);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     (!isLiked ? api.addLikeToCard(card._id) : api.deleteLikeFromCard(card._id))

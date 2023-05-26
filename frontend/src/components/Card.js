@@ -5,17 +5,10 @@ function Card({ card, onCardClick, onCardDelete, onCardLike }) {
   const currentUser = React.useContext(CurrentUserContext);
 
   // Определяем, являемся ли мы владельцем текущей карточки
-  // console.log('currentUser -> ' + currentUser);
-  // console.log('card.owner._id -> ' + card.owner._id);
-
   const isOwn = currentUser?.data?._id 
   ? card.owner._id === currentUser?.data._id 
   : card.owner._id === currentUser?._id;
 
-  // const isOwn = card.owner._id === currentUser.data._id;
-  // console.log(card.owner._id);
-  // console.log(currentUser.data._id);
-  // console.log(currentUser.data.avatar);
 
   // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
   const isLiked = card.likes.some((i) => 
@@ -37,7 +30,6 @@ function Card({ card, onCardClick, onCardDelete, onCardLike }) {
   //по клику меняется isOpen
 
   function handleLikeClick() {
-    // console.log(card);
     onCardLike(card);
   }
 

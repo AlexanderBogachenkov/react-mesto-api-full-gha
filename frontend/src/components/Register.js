@@ -2,8 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Register({ loggedIn, handleRegister, isLoading }) {
-  //   console.log(loggedIn);
-  //   console.log(handleRegister);
+
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -20,7 +19,7 @@ function Register({ loggedIn, handleRegister, isLoading }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(handleRegister);
+   
     handleRegister(email, password);
   };
 
