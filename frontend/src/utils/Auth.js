@@ -2,7 +2,7 @@ const BASE_URL = "https://alexboga.projectback.nomoredomains.monster";
 // const BASE_URL = "http://127.0.0.1:3000"; // тестируем локально
 
 const _checkResponse = (res) => {
-  
+
   return res.ok ? res.json() : (Promise.reject(`Ошибка ${res.status}, что-то не так...`));
 };
 
@@ -13,7 +13,7 @@ export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: "POST",
     headers: {
-      // "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": "*",
       // Accept: "application/json",
       "Content-Type": "application/json",
     },
@@ -22,14 +22,14 @@ export const register = (email, password) => {
       password,
     }),
   })
-  .then(_checkResponse);
+    .then(_checkResponse);
 };
 
 export const authorize = (email, password) => {
   return fetch(`${BASE_URL}/signin`, {
     method: "POST",
     headers: {
-      // "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": "*",
       // Accept: "application/json",
       "Content-Type": "application/json",
     },
@@ -42,7 +42,7 @@ export const getContent = (token) => {
     method: "GET",
     // credentials: "include",
     headers: {
-      // "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": "*",
       // Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
