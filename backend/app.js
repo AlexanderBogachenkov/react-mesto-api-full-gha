@@ -14,7 +14,7 @@ const userRoute = require("./routes/users");
 const cardRoute = require("./routes/cards");
 const { REGEX_URL } = require("./utils/constants");
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
